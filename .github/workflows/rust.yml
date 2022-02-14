@@ -20,8 +20,6 @@ jobs:
       run: cargo install trunk
     - name: Add web assembly 
       run: rustup target add wasm32-unknown-unknown
-    - name: Add web module
-      run: cargo add dioxus --features web
     - name: Build
       run: cargo build --verbose
     - name: Run tests
