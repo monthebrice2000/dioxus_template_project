@@ -17,7 +17,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install trunk
-      run: cargo install trunk
+      #run: cargo install trunk
+      uses: jetli/trunk-action@v0.1.0
     - name: Add web assembly 
       run: rustup target add wasm32-unknown-unknown
     - name: Build
