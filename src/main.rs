@@ -7,11 +7,16 @@ fn main() {
 }
 
 fn app(cx: Scope) -> Element {
-    cx.render( rsx!{
+
+    cx.render(rsx!{
+        div { "hello world with WASM, wasm!" }
+    })
+
+    /*cx.render( rsx!{
         Home{
             score : 3,
         }
-    })
+    })*/
 }
 
 #[derive(PartialEq, Props)]
