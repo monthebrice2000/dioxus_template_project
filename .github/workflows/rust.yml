@@ -27,5 +27,5 @@ jobs:
       run: cargo test --verbose
     - name: Trunk.toml build
       run: trunk build --release
-    #- name: Trunk.toml tests
-      #run: trunk serve
+    - name: Trunk.toml tests
+      run: trunk serve
