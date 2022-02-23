@@ -1,55 +1,71 @@
 extern crate dioxus;
+extern crate axum;
 
+use axum::{routing::get, Router};
 use dioxus::prelude::*;
+use std::net::SocketAddr;
+use dioxus::prelude::Scope;
+use axum::response::Html;
 
-fn main() {
-    dioxus::web::launch(app);
+
+#[tokio::main]
+async fn main() {
+    // build our application with a route
+    let app = Router::new()
+        .route("/", get(home))
+        .route("/signin", get(login))
+        .route("/register", get(register));
+
+    // run it
+    let addr = SocketAddr::from(([127, 0, 0, 1], 3001));
+    println!("- Route available on http://{}", addr);
+    println!("- Route available on http://{}/signin", addr);
+    println!("- Route available on http://{}/register", addr);
+    axum::Server::bind(&addr)
+        .serve(app.into_make_service())
+        .await
+        .unwrap();
 }
 
-fn app(cx: Scope) -> Element {
 
-    cx.render(rsx!{
-        div { "hello world with WASM, wasm!" }
-    })
+async fn register() -> Html<String> {
 
-    /*cx.render( rsx!{
-        Home{
-            score : 3,
+    fn register( cx: Scope ) -> Element {
+        cx.render( rsx!{
+        head {
+            title{
+                "Web DIOXUS"
+            }
+            link {
+                rel: "stylesheet",
+                href: "https://monthebrice2000.github.io/dioxus_template_project/styles-e31f16350f020b31.css",
+            }
         }
-    })*/
-}
-
-#[derive(PartialEq, Props)]
-struct RegisterProps {
-    score: i32
-}
-
-fn Register(cx: Scope<RegisterProps>) -> Element {
-    cx.render(rsx!{
-        div{
+        body{
+            div{
             class : "main",
             div {
                 class : "header",
                 a{
-                    "href" : "#",
+                    "href" : "http://127.0.0.1:3001/",
                     class : "title",
                     "Conduit"
                 }
                 div {
                     class : "nav",
                     a{
-                        "href" : "#",
-                        class : "item active",
+                        "href" : "http://127.0.0.1:3001/",
+                        class : "item",
                         "Home"
                     }
                     a{
-                        "href" : "#",
+                        "href" : "http://127.0.0.1:3001/signin",
                         class : "item",
                         "Sign in"
                     }
                     a{
-                        "href" : "#",
-                        class : "item",
+                        "href" : "http://127.0.0.1:3001/register",
+                        class : "item active",
                         "Sign up"
                     }
                 }
@@ -106,41 +122,52 @@ fn Register(cx: Scope<RegisterProps>) -> Element {
                 }
 
             }
-
         }
-    })
+        }
+    } )
+    }
+    let mut app = VirtualDom::new(register );
+    let _ = app.rebuild();
+    Html( dioxus::ssr::render_vdom( &app ))
 }
 
-#[derive(PartialEq, Props)]
-struct HomeProps {
-    score: i32
-}
 
-fn Home(cx: Scope<HomeProps>) -> Element {
-    cx.render(rsx!{
-        div{
+async fn home() -> Html<String>{
+    fn home( cx: Scope ) -> Element {
+        cx.render( rsx!{
+        head {
+            title{
+                "Web DIOXUS"
+            }
+            link {
+                rel: "stylesheet",
+                href: "https://monthebrice2000.github.io/dioxus_template_project/styles-e31f16350f020b31.css",
+            }
+        }
+        body{
+            div{
             class : "main home",
             div {
                 class : "header",
                 a{
-                    "href" : "#",
+                    "href" : "http://127.0.0.1:3001/",
                     class : "title",
                     "Conduit"
                 }
                 div {
                     class : "nav",
                     a{
-                        "href" : "#",
+                        "href" : "http://127.0.0.1:3001/",
                         class : "item active",
                         "Home"
                     }
                     a{
-                        "href" : "#",
+                        "href" : "http://127.0.0.1:3001/signin",
                         class : "item",
                         "Sign in"
                     }
                     a{
-                        "href" : "#",
+                        "href" : "http://127.0.0.1:3001/register",
                         class : "item",
                         "Sign up"
                     }
@@ -240,41 +267,52 @@ fn Home(cx: Scope<HomeProps>) -> Element {
                 }
 
             }
-
         }
-    })
+      }
+    } )
+    }
+    let mut app = VirtualDom::new(home);
+    let _ = app.rebuild();
+    Html( dioxus::ssr::render_vdom( &app ))
 }
 
-#[derive(PartialEq, Props)]
-struct LoginProps {
-    score: i32
-}
 
-fn Login(cx: Scope<LoginProps>) -> Element {
-    cx.render(rsx!{
-        div{
+async fn login() -> Html<String> {
+    fn login( cx: Scope ) -> Element {
+        cx.render( rsx!{
+        head {
+            title{
+                "Web DIOXUS"
+            }
+            link {
+                rel: "stylesheet",
+                href: "https://monthebrice2000.github.io/dioxus_template_project/styles-e31f16350f020b31.css",
+            }
+        }
+        body{
+            div{
             class : "main",
             div {
                 class : "header",
                 a{
-                    "href" : "#",
+                    "href" : "http://127.0.0.1:3001/",
                     class : "title",
                     "Conduit"
                 }
                 div {
                     class : "nav",
                     a{
-                        "href" : "#",
+                        "href" : "http://127.0.0.1:3001/",
                         class : "item",
                         "Home"
                     }
                     a{
-                        "href" : "#",
+                        "href" : "http://127.0.0.1:3001/signin",
                         class : "item active",
                         "Sign in"
                     }
                     a{
-                        "href" : "#",
+                        "href" : "http://127.0.0.1:3001/register",
                         class : "item",
                         "Sign up"
                     }
@@ -322,8 +360,8 @@ fn Login(cx: Scope<LoginProps>) -> Element {
                 target : "_blank",
                 span {
                     class : "logo",
-                    i{
-                        class : "fab fa-github",
+                    img{
+                        src : "https://monthebrice2000.github.io/dioxus_template_project/img/github.png",
                     }
                 }
                 span{
@@ -332,7 +370,11 @@ fn Login(cx: Scope<LoginProps>) -> Element {
                 }
 
             }
-
         }
-    })
+        }
+    } )
+    }
+    let mut app = VirtualDom::new(login);
+    let _ = app.rebuild();
+    Html( dioxus::ssr::render_vdom( &app ))
 }
