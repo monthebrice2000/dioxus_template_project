@@ -149,6 +149,7 @@ body .main .footer {
 body .main .footer .logo {
     flex-basis: 5%;
     height: 50%;
+    background : white;
 }
 body .main .footer .title {
     height: 50%;
